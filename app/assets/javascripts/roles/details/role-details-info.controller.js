@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Bastion.roles.controller:RoleDetailsInfoController
+ * @name  Roles.roles.controller:RoleDetailsInfoController
  *
  * @requires $scope
  * @requires $q
@@ -23,7 +23,7 @@
  * @description
  *   Provides the functionality for the role details action pane.
  */
-angular.module('Bastion.roles').controller('RoleDetailsInfoController',
+angular.module('Roles.roles').controller('RoleDetailsInfoController',
     ['$scope', '$q', 'gettext', 'Role',
     function ($scope, $q, gettext, Role) {
 

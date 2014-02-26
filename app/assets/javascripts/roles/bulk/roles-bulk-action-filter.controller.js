@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Bastion.roles.controller:RolesBulkActionEnvironmentController
+ * @name  Roles.roles.controller:RolesBulkActionEnvironmentController
  *
  * @requires $scope
  * @requires Role
@@ -24,7 +24,7 @@
  * @description
  *   A controller for providing bulk action functionality for setting content view and environment
  */
-angular.module('Bastion.roles').controller('RolesBulkActionEnvironmentController',
+angular.module('Roles.roles').controller('RolesBulkActionEnvironmentController',
     ['$scope', 'Role', 'Organization', 'CurrentOrganization',
     function ($scope, Role, Organization, CurrentOrganization) {
 

@@ -1,7 +1,45 @@
+#
+# Copyright 2014 Red Hat, Inc.
+#
+# This software is licensed to you under the GNU General Public
+# License as published by the Free Software Foundation; either version
+# 2 of the License (GPLv2) or (at your option) any later version.
+# There is NO WARRANTY for this software, express or implied,
+# including the implied warranties of MERCHANTABILITY,
+# NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
+# have received a copy of GPLv2 along with this software; if not, see
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
 module Roles
   module Api
     class RolesController < ::Api::V2::RolesController
 
+      def index
+        @render_template = 'roles/api/roles/index'
+        super
+=begin
+        results = ::Role.search_for(*search_options).paginate(paginate_options).collect
+
+        roles = {
+          :results => results,
+          :subtotal => results.count,
+          :total => results.count,
+          :page => 1,
+          :per_page => results.count
+        }
+
+        respond_for_index(:collection => roles)
+=end
+      end
+
+      def show
+        @role = ::Role.find(params[:id])
+        @resource_types = @role.permissions.collect do |permission|
+          permission.resource_type
+        end.uniq
+
+        respond_for_show(:resource => @role)
+      end
     end
   end
 end

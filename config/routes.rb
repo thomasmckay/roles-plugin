@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   namespace 'roles' do
     match 'plugin' => 'roles#plugin', :via => :get
 
-    #namespace 'api' do
-    #  match 'index' => 'roles#index', :via => :get
-    #end
+    namespace 'api' do
+      match 'index' => 'roles#index', :via => :get
+      match 'show' => 'roles#show', :via => :get
+    end
   end
 
 end

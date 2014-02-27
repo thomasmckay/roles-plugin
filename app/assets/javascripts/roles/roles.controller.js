@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Bastion.roles.controller:RolesController
+ * @name  Roles.roles.controller:RolesController
  *
  * @requires $scope
  * @requires $location
@@ -26,7 +26,7 @@
  *   Defines the columns to display and the transform function for how to generate each row
  *   within the table.
  */
-angular.module('Bastion.roles').controller('RolesController',
+angular.module('Roles.roles').controller('RolesController',
     ['$scope', '$location', 'Nutupane', 'Role', 'CurrentOrganization',
     function ($scope, $location, Nutupane, Role, CurrentOrganization) {
 

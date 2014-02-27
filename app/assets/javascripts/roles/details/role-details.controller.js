@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Bastion.roles.controller:RoleDetailsController
+ * @name  Roles.roles.controller:RoleDetailsController
  *
  * @requires $scope
  * @requires $state
@@ -22,7 +22,7 @@
  * @description
  *   Provides the functionality for the role details action pane.
  */
-angular.module('Bastion.roles').controller('RoleDetailsController',
+angular.module('Roles.roles').controller('RoleDetailsController',
     ['$scope', '$state', 'Role', function ($scope, $state, Role) {
 
         $scope.successMessages = [];

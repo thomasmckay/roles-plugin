@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Bastion.roles.controller:RolesBulkActionController
+ * @name  Roles.roles.controller:RolesBulkActionController
  *
  * @requires $scope
  * @requires $q
@@ -25,7 +25,7 @@
  * @description
  *   A controller for providing bulk action functionality to the roles page.
  */
-angular.module('Bastion.roles').controller('RolesBulkActionController',
+angular.module('Roles.roles').controller('RolesBulkActionController',
     ['$scope', '$q', '$location', 'gettext', 'Role', 'CurrentOrganization',
     function ($scope, $q, $location, gettext, Role, CurrentOrganization) {
         $scope.successMessages = [];

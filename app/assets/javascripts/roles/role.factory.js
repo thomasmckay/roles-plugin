@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc service
- * @name  Bastion.roles.factory:Role
+ * @name  Roles.roles.factory:Role
  *
  * @requires $resource
  * @requires CurrentOrganization
@@ -21,7 +21,7 @@
  * @description
  *   Provides a $resource for a role or list of roles
  */
-angular.module('Bastion.roles').factory('Role', ['$resource',
+angular.module('Roles.roles').factory('Role', ['$resource',
     function ($resource) {
         return $resource('/../api/v2/roles/:id/:action', {id: '@id'}, {
             query: {method: 'GET'},

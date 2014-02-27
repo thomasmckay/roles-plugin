@@ -8,7 +8,7 @@ module Roles
     def rules
       {
         :index => lambda {true},
-        :all => lambda {true}
+        :plugin => lambda {true}
       }
     end
 

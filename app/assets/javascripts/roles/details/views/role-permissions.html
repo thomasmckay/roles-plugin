@@ -6,24 +6,16 @@
   <div class="nutupane-bar">
 
     <div class="col-sm-3">
-      <div class="input-group input-group">
+      <div class="input-group">
         <input type="text"
                class="form-control"
-               placeholder="{{ 'Search...' | translate }}"
-               ng-model="permissionsTable.searchTerm"
-               on-enter="permissionsTable.search(permissionsTable.searchTerm)"/>
-        <span class="input-group-btn">
-          <button ng-click="permissionsTable.search(permissionsTable.searchTerm)" class="btn btn-default" type="button"><i class="icon-search"></i></button>
-        </span>
+               placeholder="{{ 'Filter' | translate }}"
+               ng-model="permissionFilter"/>
       </div>
     </div>
 
-    <div class="col-sm-3 nutupane-info">
-      <span translate>Showing {{ permissionsTable.rows.length }} of {{ permissionsTable.resource.subtotal }} ({{ permissionsTable.resource.total }} Total) Roles</span>
-    </div>
-
-    <div class="pull-right">
-      <div class="pull-left nutupane-info">
+    <div class="fr select-action">
+      <span class="nutupane-info">
         <span translate>{{ permissionsTable.numSelected }} Selected</span>
         <span>|</span>
         <a class="deselect-action"
@@ -32,16 +24,18 @@
            ng-click="permissionsTable.selectAll(false)">
           Deselect All
         </a>
-      </div>
+      </span>
 
-      <div ng-hide="role.readonly" class="nutupane-actions pull-right">
-         <button class="btn btn-primary"
-                 translate
-                 ng-disabled="disableRemoveButton()"
-                 ng-click="removeSelected()">
-           Remove Selected
-         </button>
-      </div>
+      <button class="btn btn-default"
+              ng-disabled="permissionsTable.numSelected == 0 || permissionsTable.working"
+              ng-click="removePermissions()">
+        {{ 'Remove Selected' | translate }}
+      </button>
+      <button class="btn btn-default"
+              ui-sref="roles.details.permissions.new">
+        {{ 'New Permission' | translate }}
+      </button>
+
     </div>
   </div>
 
@@ -55,20 +49,22 @@
 
       <table ng-class="{'table-mask': permissionsTable.working}" class="table table-full table-striped">
         <thead>
-          <tr alch-table-head row-select>
+          <tr alch-table-head row-select="permission">
             <th alch-table-column="quantity" sortable>{{ "Resource" | translate }}</th>
             <th alch-table-column="attached" sortable>{{ "Permission" | translate }}</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row  ng-repeat="filter in role.filters">
+          <tr alch-table-row  ng-repeat="filter in role.filters" row-select="permission">
             <td alch-table-cell>
               <a ui-sref="roles.details.info({roleId: role.id})">
                 {{ filter.permissions[0].resource_type }}
               </a>
             </td>
-            <td alch-table-cell>{{ filter.search }}</td>
+            <td alch-table-cell>
+              {{ formatPermissionsList(filter) }}
+            </td>
           </tr>
         </tbody>
       </table>

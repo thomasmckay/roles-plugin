@@ -17,19 +17,6 @@ module Roles
       def index
         @render_template = 'roles/api/roles/index'
         super
-=begin
-        results = ::Role.search_for(*search_options).paginate(paginate_options).collect
-
-        roles = {
-          :results => results,
-          :subtotal => results.count,
-          :total => results.count,
-          :page => 1,
-          :per_page => results.count
-        }
-
-        respond_for_index(:collection => roles)
-=end
       end
 
       def show
@@ -37,8 +24,6 @@ module Roles
         @resource_types = @role.permissions.collect do |permission|
           permission.resource_type
         end.uniq
-
-        respond_for_show(:resource => @role)
       end
     end
   end

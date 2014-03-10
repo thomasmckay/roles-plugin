@@ -28,14 +28,10 @@ angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
     function ($scope, $location, $q, gettext, Nutupane, Role) {
 
         var params = {
-            'search':           'role_id = ' + $scope.$stateParams.roleId,
-            'sort_by':          'name',
-            'sort_order':       'ASC',
-            'enabled' :         true,
-            'paged':            true
+            'id':               $scope.$stateParams.roleId,
         };
 
-        var nutupane = new Nutupane(Role, params);
+        var nutupane = new Nutupane(Role, params, 'permissions');
         $scope.permissionsTable = nutupane.table;
         $scope.permissionsTable.refresh = nutupane.refresh;
         $scope.removeRow = nutupane.removeRow;
@@ -63,6 +59,10 @@ angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
             });
 
             return deferred.promise;
+        };
+
+        $scope.formatPermissionsList = function (filter) {
+            return "TODO: show filter permission names";
         };
     }]
 );

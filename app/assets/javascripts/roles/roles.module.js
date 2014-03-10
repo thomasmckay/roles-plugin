@@ -50,7 +50,21 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
             }
         }
     })
-    .state('roles.details', {
+    .state('roles.new', {
+        url: '/roles/new',
+        collapsed: true,
+        views: {
+            'table': {
+                templateUrl: 'roles/views/roles-table-collapsed.html'
+            },
+            'action-panel': {
+                controller: 'NewRoleController',
+                templateUrl: 'roles/new/views/role-new.html'
+            }
+        }
+    });
+
+    $stateProvider.state('roles.details', {
         abstract: true,
         url: '/roles/:roleId',
         collapsed: true,
@@ -74,6 +88,19 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         collapsed: true,
         controller: 'RoleDetailsPermissionsController',
         templateUrl: 'roles/details/views/role-permissions.html'
+    })
+    .state('roles.details.permissions.new', {
+        url: '/new',
+        collapsed: true,
+        views: {
+            'table': {
+                templateUrl: 'roles/views/roles-table-collapsed.html'
+            },
+            'action-panel': {
+                controller: 'NewRolePermissionController',
+                templateUrl: 'roles/new/views/role-permission-new.html'
+            }
+        }
     });
 
     $stateProvider.state("roles.bulk-actions", {

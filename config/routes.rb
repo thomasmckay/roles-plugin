@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
     namespace 'api' do
       match 'index' => 'roles#index', :via => :get
-      match 'show' => 'roles#show', :via => :get
+      match ':id/show' => 'roles#show', :via => :get
+      match '' => 'roles#create', :via => :post
     end
   end
 

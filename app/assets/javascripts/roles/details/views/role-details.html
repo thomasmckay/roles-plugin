@@ -49,6 +49,18 @@
           Permissions
         </a>
       </li>
+      <li ng-class="{active: stateIncludes('roles.details.permissions')}">
+        <a translate
+           ui-sref="roles.details.permissions({roleId: role.id})">
+          Users
+        </a>
+      </li>
+      <li ng-class="{active: stateIncludes('roles.details.permissions')}">
+        <a translate
+           ui-sref="roles.details.permissions({roleId: role.id})">
+          User Groups
+        </a>
+      </li>
     </ul>
   </nav>
 

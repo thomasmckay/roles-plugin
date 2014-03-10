@@ -1,0 +1,78 @@
+<section class="nutupane-sub-section">
+  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+
+  <div class="nutupane-bar">
+
+    <div class="col-sm-3">
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               placeholder="{{ 'Filter' | translate }}"
+               ng-model="userFilter"/>
+      </div>
+    </div>
+
+    <div class="fr select-action">
+      <span class="nutupane-info">
+        <span translate>{{ usersTable.numSelected }} Selected</span>
+        <span>|</span>
+        <a class="deselect-action"
+           translate
+           ng-class="{ 'disabled-link' : usersTable.numSelected == 0 }"
+           ng-click="usersTable.selectAll(false)">
+          Deselect All
+        </a>
+      </span>
+
+      <button ng-if="isState('roles.details.users.list')"
+              class="btn btn-default"
+              ng-disabled="usersTable.numSelected == 0 || usersTable.working"
+              ng-click="removeUsers()">
+        {{ 'Remove Selected' | translate }}
+      </button>
+      <button ng-if="isState('roles.details.users.add')"
+              class="btn btn-default"
+              ng-disabled="usersTable.numSelected == 0 || usersTable.working"
+              ng-click="addUsers()">
+        {{ 'Add Selected' | translate }}
+      </button>
+
+    </div>
+  </div>
+
+  <div alch-table="usersTable" class="nutupane">
+    <div alch-container-scroll control-width="usersTable" alch-infinite-scroll="usersTable.nextPage()">
+      <div ng-show="usersTable.rows.length == 0">
+        <div class="loading-mask" ng-show="usersTable.working">
+          <i class="icon-spinner icon-spin"></i>
+          {{ "Loading..." | translate }}
+        </div>
+
+        <p ng-hide="usersTable.working" translate>No User to show.</p>
+      </div>
+
+      <table ng-show="usersTable.rows.length > 0"
+             ng-class="{'table-mask': usersTable.working}" class="table table-full table-striped">
+        <thead>
+          <tr alch-table-head row-select="user">
+            <th alch-table-column="login" translate>Login</th>
+            <th alch-table-column="mail" translate>Email</th>
+            <th alch-table-column="last_login_on" translate>Last Login</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr alch-table-row ng-repeat="user in usersTable.rows | filter:userFilter" row-select="user">
+            <td alch-table-cell>
+              <a href="../users/{{user.id}}/edit"}}>
+                {{ user.login }}
+              </a>
+            </td>
+            <td alch-table-cell>{{ user.mail }}</td>
+            <td alch-table-cell>{{ user.last_login_on }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

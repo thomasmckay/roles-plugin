@@ -103,6 +103,42 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         }
     });
 
+    $stateProvider.state('roles.details.users', {
+        abstract: true,
+        collapsed: true,
+        templateUrl: 'roles/details/views/role-users.html'
+    })
+    .state('roles.details.users.list', {
+        url: '/users',
+        collapsed: true,
+        controller: 'RoleUsersController',
+        templateUrl: 'roles/details/views/role-users-table.html'
+    })
+    .state('roles.details.users.add', {
+        url: '/users/add',
+        collapsed: true,
+        controller: 'RoleAddUsersController',
+        templateUrl: 'roles/details/views/role-users-table.html'
+    });
+
+    $stateProvider.state('roles.details.user-groups', {
+        abstract: true,
+        collapsed: true,
+        templateUrl: 'roles/details/views/role-user-groups.html'
+    })
+    .state('roles.details.user-groups.list', {
+        url: '/user-groups',
+        collapsed: true,
+        controller: 'RoleUserGroupsController',
+        templateUrl: 'roles/details/views/role-user-groups-table.html'
+    })
+    .state('roles.details.user-groups.add', {
+        url: '/user-groups/add',
+        collapsed: true,
+        controller: 'RoleAddUserGroupsController',
+        templateUrl: 'roles/details/views/role-user-groups-table.html'
+    });
+
     $stateProvider.state("roles.bulk-actions", {
         abstract: true,
         collapsed: true,

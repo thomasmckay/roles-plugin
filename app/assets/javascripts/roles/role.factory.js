@@ -31,7 +31,11 @@ angular.module('Roles.roles').factory('Role', ['$resource',
             permissions: {method: 'GET', params: {action: 'show'}, transformResponse: function (data) {
                 var role = angular.fromJson(data);
                 return {results: role.filters};
-            }}
+            }},
+            userGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
+            availableUserGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
+            users: {method: 'GET', isArray: false, url: '/../api/v2/users'},
+            availableUsers: {method: 'GET', isArray: false, url: '/../api/v2/users'}
         });
     }]
 );

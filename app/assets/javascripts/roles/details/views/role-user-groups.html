@@ -1,0 +1,20 @@
+<span page-title ng-model="role">{{ 'User Groups for:' | translate }} {{ role.name }}</span>
+
+<h4 translate>User Group Management</h4>
+<nav>
+  <ul class="nav nav-tabs">
+    <li ng-class="{active: isState('roles.details.user-groups.list')}">
+      <a ui-sref="roles.details.user-groups.list">
+        <span translate>List/Remove</span>
+      </a>
+    </li>
+
+    <li ng-class="{active: isState('roles.details.user-groups.add')}">
+      <a ui-sref="roles.details.user-groups.add">
+        <span translate>Add</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div ui-view></div>

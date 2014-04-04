@@ -13,12 +13,12 @@ module Roles
     end
 
     def index
-      render 'bastion/layouts/application', :layout => false
+      render 'roles/layouts/application', :layout => false
     end
 
     def plugin
       #redirect_to :action => 'index', :anchor => '/roles'
-      render 'bastion/layouts/application', :layout => false, :anchor => '/roles'
+      render 'roles/layouts/application', :layout => false, :anchor => '/roles'
     end
   end
 end

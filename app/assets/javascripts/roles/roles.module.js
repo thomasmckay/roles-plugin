@@ -11,6 +11,8 @@
  http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
  **/
 
+BASTION_MODULES.push('Roles.roles');
+
 /**
  * @ngdoc module
  * @name  Roles.roles

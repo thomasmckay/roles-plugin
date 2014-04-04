@@ -26,6 +26,9 @@
  * @description
  *   Controls the creation of an empty Role object for use by sub-controllers.
  */
+
+// TODO: <walden> thomasmckay: you could try specifying the views as table@roles.details and action-panel@roles.details
+
 angular.module('Roles.roles').controller('NewRolePermissionController',
     ['$scope', '$q', 'FormUtils', 'Role', 'Organization', 'CurrentOrganization', 'ContentView',
     function ($scope, $q, FormUtils, Role, Organization, CurrentOrganization, ContentView) {

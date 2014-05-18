@@ -3,14 +3,7 @@ require_dependency "roles/application_controller"
 module Roles
   class RolesController < Roles::ApplicationController
 
-    before_filter :authorize
-
-    def rules
-      {
-        :index => lambda {true},
-        :plugin => lambda {true}
-      }
-    end
+    skip_before_filter :authorize
 
     def index
       render 'roles/layouts/application', :layout => false

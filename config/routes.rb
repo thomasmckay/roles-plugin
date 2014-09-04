@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Roles::Engine.routes.draw do
 
   #resource :roles, :only => [:index]
 

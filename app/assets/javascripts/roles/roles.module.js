@@ -46,6 +46,7 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
 
     $stateProvider.state('roles.index', {
         url: '/roles',
+        permission: 'view_roles',
         views: {
             'table': {
                 templateUrl: 'roles/views/roles-table-full.html'

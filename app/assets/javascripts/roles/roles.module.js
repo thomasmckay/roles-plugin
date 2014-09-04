@@ -55,6 +55,7 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     })
     .state('roles.new', {
         url: '/roles/new',
+        permission: 'view_roles',
         collapsed: true,
         views: {
             'table': {
@@ -70,6 +71,7 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     $stateProvider.state('roles.details', {
         abstract: true,
         url: '/roles/:roleId',
+        permission: 'view_roles',
         collapsed: true,
         views: {
             'table': {
@@ -83,17 +85,20 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     })
     .state('roles.details.info', {
         url: '/info',
+        permission: 'view_roles',
         collapsed: true,
         templateUrl: 'roles/details/views/role-info.html'
     })
     .state('roles.details.permissions', {
         url: '/permissions',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RoleDetailsPermissionsController',
         templateUrl: 'roles/details/views/role-permissions.html'
     })
     .state('roles.details.permissions.new', {
         url: '/new',
+        permission: 'view_roles',
         collapsed: true,
         views: {
             'table': {
@@ -113,12 +118,14 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     })
     .state('roles.details.users.list', {
         url: '/users',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RoleUsersController',
         templateUrl: 'roles/details/views/role-users-table.html'
     })
     .state('roles.details.users.add', {
         url: '/users/add',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RoleAddUsersController',
         templateUrl: 'roles/details/views/role-users-table.html'
@@ -131,12 +138,14 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     })
     .state('roles.details.user-groups.list', {
         url: '/user-groups',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RoleUserGroupsController',
         templateUrl: 'roles/details/views/role-user-groups-table.html'
     })
     .state('roles.details.user-groups.add', {
         url: '/user-groups/add',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RoleAddUserGroupsController',
         templateUrl: 'roles/details/views/role-user-groups-table.html'
@@ -157,6 +166,7 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
     })
     .state('roles.bulk-actions.packages', {
         url: '/roles/bulk-actions/apply',
+        permission: 'view_roles',
         collapsed: true,
         controller: 'RolesBulkActionApplyController',
         templateUrl: 'roles/bulk/views/bulk-actions-apply.html'

@@ -53,5 +53,11 @@ angular.module('Roles.roles').controller('RolesController',
         $scope.hasResource = function (name, role) {
             return _.findWhere(role.permissions, {resource_type: name}) !== undefined ? 'X' : '';
         };
+
+        $scope.formatNameList = function (nameList) {
+            return _.map(nameList, function (obj) {
+                return obj.name;
+            });
+        };
     }]
 );

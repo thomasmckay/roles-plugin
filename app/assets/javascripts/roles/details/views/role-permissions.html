@@ -51,7 +51,10 @@
         <thead>
           <tr alch-table-head row-select="permission">
             <th alch-table-column="quantity" sortable>{{ "Resource" | translate }}</th>
-            <th alch-table-column="attached" sortable>{{ "Permission" | translate }}</th>
+            <th alch-table-column="quantity" sortable>{{ "Search" | translate }}</th>
+            <th alch-table-column="attached" sortable>{{ "Organizations" | translate }}</th>
+            <th alch-table-column="attached" sortable>{{ "Locations" | translate }}</th>
+            <th alch-table-column="attached" sortable>{{ "Permissions" | translate }}</th>
           </tr>
         </thead>
 
@@ -63,7 +66,16 @@
               </a>
             </td>
             <td alch-table-cell>
-              {{ formatPermissionsList(filter) }}
+              {{ filter.search }}
+            </td>
+            <td alch-table-cell>
+              {{ formatNameList(filter.organizations) }}
+            </td>
+            <td alch-table-cell>
+              {{ formatNameList(filter.locations) }}
+            </td>
+            <td alch-table-cell>
+              {{ formatPermissionsList(filter.permissions) }}
             </td>
           </tr>
         </tbody>

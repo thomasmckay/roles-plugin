@@ -2,6 +2,8 @@
   <thead>
     <tr alch-table-head row-select>
       <th alch-table-column="name" sortable>{{ "Name" | translate }}</th>
+      <th alch-table-column="name" sortable>{{ "Organizations" | translate }}</th>
+      <th alch-table-column="name" sortable>{{ "Locations" | translate }}</th>
       <th alch-table-column="name" sortable>{{ "Resource Types" | translate }}</th>
     </tr>
   </thead>
@@ -14,6 +16,8 @@
         </a>
         <i class="icon-chevron-right selected-icon" ng-show="role.selected"></i>
       </td>
+      <td alch-table-cell>{{ role.organizations }}</td>
+      <td alch-table-cell>{{ role.locations }}</td>
       <td alch-table-cell>{{ role.resource_types }}</td>
     </tr>
   </tbody>

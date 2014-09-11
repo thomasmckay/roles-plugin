@@ -1,15 +1,16 @@
 Roles::Engine.routes.draw do
 
-  #resource :roles, :only => [:index]
-
+=begin
   namespace 'roles' do
-    match 'plugin' => 'roles#plugin', :via => :get
-
     namespace 'api' do
       match 'index' => 'roles#index', :via => :get
       match ':id/show' => 'roles#show', :via => :get
       match '' => 'roles#create', :via => :post
     end
   end
+=end
+
+  match '/:roles_page/(*path)', :to => "roles#index"
+  match '/roles/(*path)', :to => "roles#index_ie"
 
 end

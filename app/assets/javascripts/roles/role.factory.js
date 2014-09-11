@@ -21,14 +21,13 @@
  * @description
  *   Provides a $resource for a role or list of roles
  */
-angular.module('Roles.roles').factory('Role', ['$resource',
-    function ($resource) {
-        return $resource('/../roles/api/:id/:action', {id: '@id'}, {
-            get: {method: 'GET', isArray: false, params: {action: 'show'}},
-            query: {method: 'GET', isArray: false, params: {action: 'index'}},
+angular.module('Roles.roles').factory('Role',
+    ['BastionResource', function (BastionResource) {
+        return BastionResource('/../api/roles/:id/:action', {id: '@id'}, {
+            get: {method: 'GET', isArray: false},
             removeRoles: {method: 'GET', params: {action: 'filter'}},
             filter: {method: 'GET', params: {action: 'filter'}},
-            permissions: {method: 'GET', params: {action: 'show'}, transformResponse: function (data) {
+            permissions: {method: 'GET', isArray: false, transformResponse: function (data) {
                 var role = angular.fromJson(data);
                 return {results: role.filters};
             }},

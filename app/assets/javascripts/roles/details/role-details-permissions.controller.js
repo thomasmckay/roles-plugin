@@ -61,8 +61,10 @@ angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
             return deferred.promise;
         };
 
-        $scope.formatPermissionsList = function (filter) {
-            return "TODO: show filter permission names";
+        $scope.formatPermissionsList = function (permissions) {
+            return _.map(permissions, function (permission) {
+                return permission.name;
+            });
         };
     }]
 );

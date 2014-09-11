@@ -7,7 +7,13 @@ module Roles
     end
 
     initializer "roles.paths" do |app|
+      app.routes_reloader.paths.unshift("#{Roles::Engine.root}/config/routes/api/roles.rb")
       app.routes_reloader.paths.unshift("#{Roles::Engine.root}/config/overrides.rb")
+    end
+
+    config.to_prepare do
+      #Controller extensions
+      ::Api::V2::RolesController.send :include, Roles::Concerns::RolesControllerExtensions
     end
 
   end

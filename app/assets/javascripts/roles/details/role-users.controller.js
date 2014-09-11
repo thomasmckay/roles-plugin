@@ -26,23 +26,26 @@
  *   Provides the functionality for the list users details action pane.
  */
 angular.module('Roles.roles').controller('RoleUsersController',
-    ['$scope', '$q', '$location', 'gettext', 'Role', 'Nutupane',
-    function ($scope, $q, $location, gettext, Role, Nutupane) {
+    ['$scope', '$q', '$location', 'gettext', 'Role', 'User', 'Nutupane',
+    function ($scope, $q, $location, gettext, Role, User, Nutupane) {
         var usersPane, params;
 
         $scope.successMessages = [];
         $scope.errorMessages = [];
 
         params = {
-            'id':          $scope.$stateParams.roleId,
             'search':      $location.search().search || "",
             'sort_by':     'name',
             'sort_order':  'ASC',
             'paged':       true
         };
 
-        usersPane = new Nutupane(Role, params, 'users');
+        usersPane = new Nutupane(User, params);
         $scope.usersTable = usersPane.table;
+        usersPane.searchTransform = function () {
+            //return "role_id = " + $scope.$stateParams.roleId;
+            return "role = \"SAM Administrator\""
+        };
 
         $scope.removeUsers = function () {
             var data,

@@ -34,17 +34,18 @@ angular.module('Roles.roles').controller('RoleUsersController',
         $scope.errorMessages = [];
 
         params = {
-            'search':      $location.search().search || "",
+            'id':          $scope.$stateParams.roleId,
+            'search':      $location.search().search || "", // TODO: is this correct?
             'sort_by':     'name',
             'sort_order':  'ASC',
             'paged':       true
         };
 
-        usersPane = new Nutupane(User, params);
+        usersPane = new Nutupane(Role, params, 'users');
         $scope.usersTable = usersPane.table;
+        // TODO: inifinite loop as the list just increments page number
         usersPane.searchTransform = function () {
-            //return "role_id = " + $scope.$stateParams.roleId;
-            return "role = \"SAM Administrator\""
+            return "\"\""
         };
 
         $scope.removeUsers = function () {
@@ -78,7 +79,7 @@ angular.module('Roles.roles').controller('RoleUsersController',
             };
 
             $scope.usersTable.working = true;
-            Role.saveUsers({id: $scope.role.id}, data, success, error);
+            Role.removeUsers({id: $scope.role.id}, data, success, error);
             return deferred.promise;
         };
     }]

@@ -25,6 +25,7 @@ angular.module('Roles.roles').factory('Role',
     ['BastionResource', function (BastionResource) {
         return BastionResource('/../api/roles/:id/:action', {id: '@id'}, {
             get: {method: 'GET', isArray: false},
+            update: {method: 'PUT'},
             removeRoles: {method: 'GET', params: {action: 'filter'}},
             filter: {method: 'GET', params: {action: 'filter'}},
             permissions: {method: 'GET', isArray: false, transformResponse: function (data) {
@@ -33,8 +34,10 @@ angular.module('Roles.roles').factory('Role',
             }},
             userGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
             availableUserGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
-            users: {method: 'GET', isArray: false, url: '/../api/v2/users'},
-            availableUsers: {method: 'GET', isArray: false, url: '/../api/v2/users'}
+            users: {method: 'GET', url: '/../roles/api/roles/:id/users'},
+            availableUsers: {method: 'GET', url: '/../roles/api/roles/:id/users', params: {'associated': false}},
+            addUsers: {method: 'POST', url: '/../roles/api/roles/:id/users'},
+            removeUsers: {method: 'PUT', url: '/../roles/api/roles/:id/users'}
         });
     }]
 );

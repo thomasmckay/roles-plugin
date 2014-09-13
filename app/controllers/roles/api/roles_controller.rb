@@ -14,17 +14,53 @@ module Roles
   module Api
     class RolesController < ::Api::V2::RolesController
 
-      def index
-        @render_template = 'roles/api/roles/index'
-        super
+      before_filter :find_resource, :only => [:users, :add_users, :remove_users]
+
+      layout '/api/v2/layouts/index_layout', :only => :users
+
+      # TODO: apipie
+      def users
+        associated = (params[:associated] || 'true').to_bool # TODO: what's best way to check bool in params?
+        user_ids = User.authorized(:view_users).except_hidden.collect do |user|
+          if associated
+            user.id if user.role_ids.include? @role.id
+          else
+            user.id unless user.role_ids.include? @role.id
+          end
+        end
+        user_ids.compact!
+
+        @users = User.where(:id => user_ids).paginate(paginate_options)
+
+        render :template => 'api/v2/users/index'
       end
 
-      def show
-        @role = ::Role.find(params[:id])
-        @resource_types = @role.permissions.collect do |permission|
-          permission.resource_type
-        end.uniq
+      # TODO: apipie
+      def add_users
+        ids = params[:role][:user_ids]
+        @role.user_ids = (@role.user_ids + ids).uniq
+        @role.save!
+        render :action => :show
       end
+
+      # TODO: apipie
+      def remove_users
+        ids = params[:role][:user_ids]
+        @role.user_ids = (@role.user_ids - ids).uniq
+        @role.save!
+        render :action => :show
+      end
+
+      def action_permission
+        if %w(add_users remove_users).include?(params[:action])
+          :edit
+        elsif %w(users).include?(params[:action])
+          :view
+        else
+          super
+        end
+      end
+
     end
   end
 end

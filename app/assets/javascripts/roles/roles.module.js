@@ -90,11 +90,23 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         templateUrl: 'roles/details/views/role-info.html'
     })
     .state('roles.details.permissions', {
+        abstract: true,
+        controller: 'RoleDetailsPermissionsController',
+        template: '<div ui-view></div>'
+    })
+    .state('roles.details.permissions.index', {
         url: '/permissions',
         permission: 'view_roles',
         collapsed: true,
         controller: 'RoleDetailsPermissionsController',
         templateUrl: 'roles/details/views/role-permissions.html'
+    })
+    .state('roles.details.permissions.info', {
+        url: '/permissions/:filterId/info',
+        permission: 'view_roles',
+        collapsed: true,
+        controller: 'RolePermissionInfoController',
+        templateUrl: 'roles/details/views/role-permission-info.html'
     })
     .state('roles.details.permissions.new', {
         url: '/new',

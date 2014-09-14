@@ -16,9 +16,9 @@
         </a>
         <i class="icon-chevron-right selected-icon" ng-show="role.selected"></i>
       </td>
-      <td alch-table-cell>{{ role.organizations }}</td>
-      <td alch-table-cell>{{ role.locations }}</td>
-      <td alch-table-cell>{{ role.resource_types }}</td>
+      <td alch-table-cell>{{ role.organizations.join(', ') }}</td>
+      <td alch-table-cell>{{ role.locations.join(', ') }}</td>
+      <td alch-table-cell>{{ role.resource_types.join(', ') }}</td>
     </tr>
   </tbody>
 </table>

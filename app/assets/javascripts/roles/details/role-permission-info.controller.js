@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Roles.roles.controller:RoleDetailsPermissionsController
+ * @name  Roles.roles.controller:RolePermissionInfoController
  *
  * @requires $scope
  * @requires $q
@@ -23,51 +23,39 @@
  * @description
  *   Provides the functionality for the role details action pane.
  */
-angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
-    ['$scope', '$location', '$q', 'gettext', 'Nutupane', 'Role',
-    function ($scope, $location, $q, gettext, Nutupane, Role) {
-
-        var params = {
-            'id':               $scope.$stateParams.roleId,
-        };
-
-        var nutupane = new Nutupane(Role, params, 'permissions');
-        $scope.permissionsTable = nutupane.table;
-        $scope.permissionsTable.refresh = nutupane.refresh;
-        $scope.removeRow = nutupane.removeRow;
+angular.module('Roles.roles').controller('RolePermissionInfoController',
+    ['$scope', '$location', '$q', 'gettext', 'Role', 'Filter',
+    function ($scope, $location, $q, gettext, Role, Filter) {
 
         $scope.successMessages = [];
         $scope.errorMessages = [];
 
         $scope.panel = $scope.panel || {loading: false};
 
+        // TODO: Is there a way to get the full role passed in on $stateParams?
+        //       See role-permissions.html for call
+        // TODO: panel.loading below is not checking for _both_ role and filter
         $scope.role = $scope.role || Role.get({id: $scope.$stateParams.roleId}, function () {
             $scope.panel.loading = false;
         });
+        $scope.filter = $scope.filter || Filter.get({id: $scope.$stateParams.filterId}, function () {
+            $scope.panel.loading = false;
+        });
 
-        $scope.save = function (role) {
+        $scope.save = function (filter) {
             var deferred = $q.defer();
 
-            role.$update(function (response) {
+            filter.$update(function (response) {
                 deferred.resolve(response);
-                $scope.successMessages.push(gettext('Role Saved'));
+                $scope.successMessages.push(gettext('Filter Saved'));
             }, function (response) {
                 deferred.reject(response);
                 angular.forEach(response.data.errors, function (errorMessage) {
-                    $scope.errorMessages.push(gettext("An error occurred saving the Role: ") + errorMessage);
+                    $scope.errorMessages.push(gettext("An error occurred saving the Filter: ") + errorMessage);
                 });
             });
 
             return deferred.promise;
-        };
-
-        $scope.formatPermissionsList = function (permissions) {
-            var fullNames;
-            fullNames = _.map(permissions, function (permission) {
-                return permission.name.split('_').slice(0, -1).join(' ').toUpperCase();
-            });
-
-            return fullNames.join(', ');
         };
     }]
 );

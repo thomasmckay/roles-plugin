@@ -52,30 +52,58 @@
           <tr alch-table-head row-select="permission">
             <th alch-table-column="quantity" sortable>{{ "Resource" | translate }}</th>
             <th alch-table-column="quantity" sortable>{{ "Search" | translate }}</th>
+<!--
             <th alch-table-column="attached" sortable>{{ "Organizations" | translate }}</th>
             <th alch-table-column="attached" sortable>{{ "Locations" | translate }}</th>
+-->
             <th alch-table-column="attached" sortable>{{ "Permissions" | translate }}</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row  ng-repeat="filter in role.filters" row-select="permission">
+          <tr alch-table-row  ng-repeat-start="filter in role.filters" row-select="permission">
             <td alch-table-cell>
-              <a ui-sref="roles.details.info({roleId: role.id})">
+              <a ui-sref="roles.details.permissions.info({roleId: role.id, filterId: filter.id})">
                 {{ filter.permissions[0].resource_type }}
               </a>
             </td>
             <td alch-table-cell>
               {{ filter.search }}
             </td>
+<!--
             <td alch-table-cell>
-              {{ formatNameList(filter.organizations) }}
+              {{ formatNameList(filter.organizations).join(', ') }}
             </td>
             <td alch-table-cell>
-              {{ formatNameList(filter.locations) }}
+              {{ formatNameList(filter.locations).join(', ') }}
             </td>
+-->
             <td alch-table-cell>
               {{ formatPermissionsList(filter.permissions) }}
+            </td>
+          </tr>
+          <tr alch-table-row ng-repeat-end ng-repeat="subfilter in filter.filters">
+            <td alch-table-cell>
+              <span class="glyphicon glyphicon-lock" title="Inherited"/>
+            </td>
+            <td alch-table-cell>
+              <a ui-sref="roles.details.permissions.info({roleId: role.id, filterId: subfilter.id})">
+                {{ subfilter.permissions[0].resource_type }}
+              </a>
+            </td>
+            <td alch-table-cell>
+              {{ subfilter.search }}
+            </td>
+<!--
+            <td alch-table-cell>
+              {{ formatNameList(subfilter.organizations).join(', ') }}
+            </td>
+            <td alch-table-cell>
+              {{ formatNameList(subfilter.locations).join(', ') }}
+            </td>
+-->
+            <td alch-table-cell>
+              {{ formatPermissionsList(subfilter.permissions) }}
             </td>
           </tr>
         </tbody>

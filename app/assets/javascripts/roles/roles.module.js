@@ -87,6 +87,7 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         url: '/info',
         permission: 'view_roles',
         collapsed: true,
+        controller: 'RoleDetailsInfoController',
         templateUrl: 'roles/details/views/role-info.html'
     })
     .state('roles.details.permissions', {
@@ -109,18 +110,11 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         templateUrl: 'roles/details/views/role-permission-info.html'
     })
     .state('roles.details.permissions.new', {
-        url: '/new',
+        url: '/permissions/new',
         permission: 'view_roles',
         collapsed: true,
-        views: {
-            'table': {
-                templateUrl: 'roles/views/roles-table-collapsed.html'
-            },
-            'action-panel': {
-                controller: 'NewRolePermissionController',
-                templateUrl: 'roles/new/views/role-permission-new.html'
-            }
-        }
+        controller: 'NewRolePermissionController',
+        templateUrl: 'roles/details/views/role-permission-new.html'
     });
 
     $stateProvider.state('roles.details.users', {

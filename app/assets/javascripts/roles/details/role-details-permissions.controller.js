@@ -24,8 +24,8 @@
  *   Provides the functionality for the role details action pane.
  */
 angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
-    ['$scope', '$location', '$q', 'gettext', 'Nutupane', 'Role',
-    function ($scope, $location, $q, gettext, Nutupane, Role) {
+    ['$scope', '$location', '$q', '$filter', 'gettext', 'Nutupane', 'Role',
+    function ($scope, $location, $q, $filter, gettext, Nutupane, Role) {
 
         var params = {
             'id':               $scope.$stateParams.roleId,
@@ -64,7 +64,7 @@ angular.module('Roles.roles').controller('RoleDetailsPermissionsController',
         $scope.formatPermissionsList = function (permissions) {
             var fullNames;
             fullNames = _.map(permissions, function (permission) {
-                return permission.name.split('_').slice(0, -1).join(' ').toUpperCase();
+                return $filter('permissionName')(permission);
             });
 
             return fullNames.join(', ');

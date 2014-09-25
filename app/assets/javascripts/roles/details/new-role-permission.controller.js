@@ -21,30 +21,41 @@
  * @requires Role
  * @requires Organization
  * @requires CurrentOrganization
- * @requires ContentView
  *
  * @description
  *   Controls the creation of an empty Role object for use by sub-controllers.
  */
 
-// TODO: <walden> thomasmckay: you could try specifying the views as table@roles.details and action-panel@roles.details
-
 angular.module('Roles.roles').controller('NewRolePermissionController',
-    ['$scope', '$q', 'FormUtils', 'Role', 'Organization', 'CurrentOrganization', 'ContentView',
-    function ($scope, $q, FormUtils, Role, Organization, CurrentOrganization, ContentView) {
+    ['$scope', '$q', '$filter', 'FormUtils', 'Role', 'Filter', 'Organization', 'CurrentOrganization',
+    function ($scope, $q, $filter, FormUtils, Role, Filter, Organization, CurrentOrganization) {
 
+        $scope.permission = new Filter();
+        $scope.permission.filters = [];
         $scope.role = $scope.role || new Role();
         $scope.panel = {loading: false};
         $scope.organization = CurrentOrganization;
 
-        $scope.$watch('role.name', function () {
-            if ($scope.roleForm.name) {
-                $scope.roleForm.name.$setValidity('server', true);
+        $scope.role.$promise.then(function () {
+            Role.availablePermissions({id: $scope.role.id}, function (response) {
+                $scope.resourceTypes = response;
+            });
+        });
+
+        $scope.$watch('permission.resource_type', function (resourceTypeId) {
+            var resourceType;
+            if (resourceTypeId && $scope.resourceTypes) {
+                resourceType = _.where($scope.resourceTypes, {id: resourceTypeId});
+                if (resourceType.length === 0) {
+                    $scope.permissionTypes = [];
+                } else {
+                    $scope.permissionTypes = resourceType[0].permissions;
+                }
             }
         });
 
-        $scope.save = function (role) {
-            role.$save(success, error);
+        $scope.save = function (permission) {
+            permission.$save(success, error);
         };
 
         function success(response) {

@@ -1,0 +1,20 @@
+<span page-title ng-model="role">{{ 'Locations for:' | translate }} {{ role.name }}</span>
+
+<h4 translate>Location Management</h4>
+<nav>
+  <ul class="nav nav-tabs">
+    <li ng-class="{active: isState('roles.details.locations.list')}">
+      <a ui-sref="roles.details.locations.list">
+        <span translate>List/Remove</span>
+      </a>
+    </li>
+
+    <li ng-class="{active: isState('roles.details.locations.add')}">
+      <a ui-sref="roles.details.locations.add">
+        <span translate>Add</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div ui-view></div>

@@ -12,7 +12,10 @@ node :organizations do |role|
   organizations = []
   role.filters.each do |filter|
     filter.organizations.each do |organization|
-      organizations << organization.name
+      organizations << {
+        :id => organization.id,
+        :name => organization.name
+      }
     end
   end
   organizations.uniq
@@ -22,7 +25,10 @@ node :locations do |role|
   locations = []
   role.filters.each do |filter|
     filter.locations.each do |location|
-      locations << location.name
+      locations << {
+        :id => location.id,
+        :name => location.name
+      }
     end
   end
   locations.uniq

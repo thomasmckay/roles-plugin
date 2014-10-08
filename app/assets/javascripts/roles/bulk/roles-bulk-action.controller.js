@@ -59,7 +59,6 @@ angular.module('Roles.roles').controller('RolesBulkActionController',
             $scope.state.working = true;
 
             params = $scope.nutupane.getAllSelectedResults();
-            params['organization_id'] = CurrentOrganization;
 
             success = function (data) {
                 deferred.resolve(data);

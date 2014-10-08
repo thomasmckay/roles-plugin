@@ -11,15 +11,18 @@ Foreman::AccessControl.permission(:edit_users).actions << [
   'roles/api/roles/remove_users'
 ]
 
+# TODO: Are reciprocal permissions needed for organizations and locations (like users above)?
+Foreman::AccessControl.permission(:edit_roles).actions << [
+  'roles/api/roles/add_organizations',
+  'roles/api/roles/remove_organizations',
+  'roles/api/roles/add_locations',
+  'roles/api/roles/remove_locations'
+]
+
 Foreman::AccessControl.permission(:view_roles).actions << [
   'roles/api/roles/users',
 ]
 Foreman::AccessControl.permission(:view_users).actions << [
   'roles/api/roles/users',
 ]
-# TODO: is the above really correct, or is below?
-#Foreman::AccessControl.permission(:edit_roles).actions << 'roles/api/roles#add_users'
-#Foreman::AccessControl.permission(:edit_roles).actions << 'roles/api/roles#remove_users'
-#Foreman::AccessControl.permission(:edit_users).actions << 'roles/api/roles#add_users'
-#Foreman::AccessControl.permission(:edit_users).actions << 'roles/api/roles#remove_users'
 

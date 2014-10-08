@@ -1,0 +1,75 @@
+<section class="nutupane-sub-section">
+  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+
+  <div class="nutupane-bar">
+
+    <div class="col-sm-3">
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               placeholder="{{ 'Filter' | translate }}"
+               ng-model="organizationFilter"/>
+      </div>
+    </div>
+
+    <div class="fr select-action">
+      <span class="nutupane-info">
+        <span translate>{{ organizationsTable.numSelected }} Selected</span>
+        <span>|</span>
+        <a class="deselect-action"
+           translate
+           ng-class="{ 'disabled-link' : organizationsTable.numSelected == 0 }"
+           ng-click="organizationsTable.selectAll(false)">
+          Deselect All
+        </a>
+      </span>
+
+      <button ng-if="isState('roles.details.organizations.list')"
+              class="btn btn-default"
+              ng-disabled="organizationsTable.numSelected == 0 || organizationsTable.working"
+              ng-click="removeOrganizations()">
+        {{ 'Remove Selected' | translate }}
+      </button>
+      <button ng-if="isState('roles.details.organizations.add')"
+              class="btn btn-default"
+              ng-disabled="organizationsTable.numSelected == 0 || organizationsTable.working"
+              ng-click="addOrganizations()">
+        {{ 'Add Selected' | translate }}
+      </button>
+
+    </div>
+  </div>
+
+  <div alch-table="organizationsTable" class="nutupane">
+    <div alch-container-scroll control-width="organizationsTable" alch-infinite-scroll="organizationsTable.nextPage()">
+      <div ng-show="organizationsTable.rows.length == 0">
+        <div class="loading-mask" ng-show="organizationsTable.working">
+          <i class="icon-spinner icon-spin"></i>
+          {{ "Loading..." | translate }}
+        </div>
+
+        <p ng-hide="organizationsTable.working" translate>No Organization to show.</p>
+      </div>
+
+      <table ng-show="organizationsTable.rows.length > 0"
+             ng-class="{'table-mask': organizationsTable.working}" class="table table-full table-striped">
+        <thead>
+          <tr alch-table-head row-select="organization">
+            <th alch-table-column="login" translate>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr alch-table-row ng-repeat="organization in organizationsTable.rows | filter:organizationFilter" row-select="organization">
+            <td alch-table-cell>
+              <a href="../organizations/{{organization.id}}/edit"}}>
+                {{ organization.login }}
+              </a>
+            </td>
+            <td alch-table-cell>{{ organization.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

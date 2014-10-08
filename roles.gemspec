@@ -17,5 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails"
+  s.add_dependency "bastion"
 
+  s.add_dependency "less-rails", "~> 2.5.0"
 end

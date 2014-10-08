@@ -61,6 +61,18 @@
           User Groups
         </a>
       </li>
+      <li ng-class="{active: stateIncludes('roles.details.organizations')}">
+        <a translate
+           ui-sref="roles.details.organizations.list({roleId: role.id})">
+          Organizations
+        </a>
+      </li>
+      <li ng-class="{active: stateIncludes('roles.details.locations')}">
+        <a translate
+           ui-sref="roles.details.locations.list({roleId: role.id})">
+          Locations
+        </a>
+      </li>
     </ul>
   </nav>
 

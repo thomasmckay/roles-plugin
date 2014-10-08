@@ -15,7 +15,3 @@ end
 child :locations => :locations do
   attributes :id, :name
 end
-
-child :filters => :filters do
-  extends 'roles/api/roles/filter'
-end

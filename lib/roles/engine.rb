@@ -12,6 +12,10 @@ module Roles
     end
 
     config.to_prepare do
+      # Model extensions
+      ::Role.send :include, Roles::Concerns::RoleExtensions
+
+      #Controller extensions
       ::Api::V2::RolesController.send :include, Roles::Concerns::RolesControllerExtensions
     end
 

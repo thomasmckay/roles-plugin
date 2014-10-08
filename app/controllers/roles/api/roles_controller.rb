@@ -14,9 +14,16 @@ module Roles
   module Api
     class RolesController < ::Api::V2::RolesController
 
-      before_filter :find_resource, :only => [:users, :add_users, :remove_users]
+      before_filter :find_resource, :only => [:users, :add_users, :remove_users, :update, :user_permissions]
 
       layout '/api/v2/layouts/index_layout', :only => :users
+
+      def update
+        # Necessary to avoid "mass assignment" errors
+        params[:role].delete :id
+        params[:role].delete :builtin
+        super
+      end
 
       # TODO: apipie
       def users
@@ -51,10 +58,34 @@ module Roles
         render :action => :show
       end
 
+      def user_permissions
+        if User.current.admin?
+          @permissions = Permission.resources_with_translations.collect do |resource_name, resource_type|
+            OpenStruct.new(:resource_type => resource_type,
+                           :resource_name => resource_name,
+                           :permissions => Permission.where(:resource_type => resource_type))
+          end
+        else
+          @permissions = []
+          User.current.roles.each do |role|
+            role.permissions.each do |permission|
+              offset = @permissions.index { |existing| existing.resource_type == permission.resource_type }
+              if offset.nil?
+
+                @permissions << OpenStruct.new(:resource_type => permission.resource_type, :permissions => [])
+                offset = -1
+              end
+              @permissions[offset].permissions << permission unless @permissions[offset].permissions.include? permission
+            end
+          end
+        end
+        render :action => :permissions
+      end
+
       def action_permission
         if %w(add_users remove_users).include?(params[:action])
           :edit
-        elsif %w(users).include?(params[:action])
+        elsif %w(users user_permissions).include?(params[:action])
           :view
         else
           super

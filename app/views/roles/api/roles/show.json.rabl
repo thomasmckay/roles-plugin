@@ -31,3 +31,10 @@ end
 child :filters => :filters do
   extends 'roles/api/roles/filter'
 end
+
+node :permissions do |role|
+  {
+    :deletable => role.deletable?,
+    :editable => role.editable?,
+  }
+end

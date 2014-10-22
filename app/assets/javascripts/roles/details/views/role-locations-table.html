@@ -1,0 +1,78 @@
+<section class="nutupane-sub-section">
+  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+
+  <div class="nutupane-bar">
+
+    <div class="col-sm-3">
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               placeholder="{{ 'Filter' | translate }}"
+               ng-model="locationFilter"/>
+      </div>
+    </div>
+
+    <div class="fr select-action">
+      <span class="nutupane-info">
+        <span translate>{{ locationsTable.numSelected }} Selected</span>
+        <span>|</span>
+        <a class="deselect-action"
+           translate
+           ng-class="{ 'disabled-link' : locationsTable.numSelected == 0 }"
+           ng-click="locationsTable.selectAll(false)">
+          Deselect All
+        </a>
+      </span>
+
+      <button ng-if="isState('roles.details.locations.list')"
+              class="btn btn-default"
+              ng-disabled="locationsTable.numSelected == 0 || locationsTable.working"
+              ng-click="removeLocations()">
+        {{ 'Remove Selected' | translate }}
+      </button>
+      <button ng-if="isState('roles.details.locations.add')"
+              class="btn btn-default"
+              ng-disabled="locationsTable.numSelected == 0 || locationsTable.working"
+              ng-click="addLocations()">
+        {{ 'Add Selected' | translate }}
+      </button>
+
+    </div>
+  </div>
+
+  <div alch-table="locationsTable" class="nutupane">
+    <div alch-container-scroll control-width="locationsTable" alch-infinite-scroll="locationsTable.nextPage()">
+      <div ng-show="locationsTable.rows.length == 0">
+        <div class="loading-mask" ng-show="locationsTable.working">
+          <i class="icon-spinner icon-spin"></i>
+          {{ "Loading..." | translate }}
+        </div>
+
+        <p ng-hide="locationsTable.working" translate>No Location to show.</p>
+      </div>
+
+      <table ng-show="locationsTable.rows.length > 0"
+             ng-class="{'table-mask': locationsTable.working}" class="table table-full table-striped">
+        <thead>
+          <tr alch-table-head row-select="location">
+            <th alch-table-column="login" translate>Login</th>
+            <th alch-table-column="mail" translate>Email</th>
+            <th alch-table-column="last_login_on" translate>Last Login</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr alch-table-row ng-repeat="location in locationsTable.rows | filter:locationFilter" row-select="location">
+            <td alch-table-cell>
+              <a href="../locations/{{location.id}}/edit"}}>
+                {{ location.login }}
+              </a>
+            </td>
+            <td alch-table-cell>{{ location.mail }}</td>
+            <td alch-table-cell>{{ location.last_login_on }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

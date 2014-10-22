@@ -31,7 +31,7 @@ angular.module('Roles.roles').controller('NewRolePermissionController',
     function ($scope, $q, $filter, FormUtils, Role, Filter, Organization, CurrentOrganization) {
 
         $scope.permission = new Filter();
-        $scope.permission.filters = [];
+        $scope.permission.permission_ids = [];
         $scope.role = $scope.role || new Role();
         $scope.panel = {loading: false};
         $scope.organization = CurrentOrganization;
@@ -45,6 +45,7 @@ angular.module('Roles.roles').controller('NewRolePermissionController',
         $scope.$watch('permission.resource_type', function (resourceTypeId) {
             var resourceType;
             if (resourceTypeId && $scope.resourceTypes) {
+                $scope.permission.permission_ids = [];  // reset any previous permission filters
                 resourceType = _.where($scope.resourceTypes, {id: resourceTypeId});
                 if (resourceType.length === 0) {
                     $scope.permissionTypes = [];
@@ -54,7 +55,19 @@ angular.module('Roles.roles').controller('NewRolePermissionController',
             }
         });
 
+        $scope.toggleSelection = function (permissionId) {
+            var idx = $scope.permission.permission_ids.indexOf(permissionId);
+
+            if (idx > -1) {
+                $scope.permission.permission_ids.splice(idx, 1);
+            } else {
+                $scope.permission.permission_ids.push(permissionId);
+            }
+        };
+
         $scope.save = function (permission) {
+            $scope.permission.role_id = $scope.role.id;
+            $scope.permission.unlimited = true;
             permission.$save(success, error);
         };
 

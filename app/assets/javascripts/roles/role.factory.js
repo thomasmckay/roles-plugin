@@ -39,6 +39,16 @@ angular.module('Roles.roles').factory('Role',
             addUsers: {method: 'POST', url: '/../roles/api/roles/:id/users'},
             removeUsers: {method: 'PUT', url: '/../roles/api/roles/:id/users'},
 
+            organizations: {method: 'GET', url: '/../roles/api/roles/:id/organizations'},
+            availableOrganizations: {method: 'GET', url: '/../roles/api/roles/:id/organizations', params: {'associated': false}},
+            addOrganizations: {method: 'POST', url: '/../roles/api/roles/:id/organizations'},
+            removeOrganizations: {method: 'PUT', url: '/../roles/api/roles/:id/organizations'},
+
+            locations: {method: 'GET', url: '/../roles/api/roles/:id/locations'},
+            availableLocations: {method: 'GET', url: '/../roles/api/roles/:id/locations', params: {'associated': false}},
+            addLocations: {method: 'POST', url: '/../roles/api/roles/:id/locations'},
+            removeLocations: {method: 'PUT', url: '/../roles/api/roles/:id/locations'},
+
             // TODO: Should this be on User? Some query to return only the user's available
             //       filter resource types and permissions.
             availablePermissions: {method: 'GET', isArray: true, url: '/../roles/api/roles/:id/permissions'}

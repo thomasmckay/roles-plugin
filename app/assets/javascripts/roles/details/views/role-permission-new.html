@@ -36,8 +36,10 @@
            ng-hide="permissionTypes.length < 1">
         <div alch-form-group label="{{ availablePermission | permissionName }}">
           <input type="checkbox"
-                 ng-model="permission.filters[availablePermission.id]"
-                 ng-true-value=1
+                 name="permission.filters[]"
+                 value="{{availablePermission.id}}"
+                 ng-checked="permission.filters.indexOf(availablePermission.id) > -1"
+                 ng-click="toggleSelection(availablePermission.id)"
                  tabindex="{{$index}}">
             <p class="help-block" translate>Help text for {{ availablePermission.name }}</p>
           </input>

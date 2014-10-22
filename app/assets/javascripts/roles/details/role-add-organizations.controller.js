@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Roles.roles.controller:RoleUsersController
+ * @name  Roles.roles.controller:RoleAddOrganizationsController
  *
  * @requires $scope
  * @requires $q
@@ -23,51 +23,53 @@
  * @requires Nutupane
  *
  * @description
- *   Provides the functionality for the list users details action pane.
+ *   Provides the functionality for adding organizations to a role.
  */
-angular.module('Roles.roles').controller('RoleUsersController',
-    ['$scope', '$q', '$location', 'gettext', 'Role', 'User', 'Nutupane',
-    function ($scope, $q, $location, gettext, Role, User, Nutupane) {
-        var usersPane, params;
+angular.module('Roles.roles').controller('RoleAddOrganizationsController',
+    ['$scope', '$q', '$location', 'gettext', 'Role', 'Nutupane',
+    function ($scope, $q, $location, gettext, Role, Nutupane) {
+        var organizationsPane, params;
 
         $scope.successMessages = [];
         $scope.errorMessages = [];
 
+        $scope.role = $scope.role || Role.get({id: $scope.$stateParams.roleId});
+
         params = {
             'id':          $scope.$stateParams.roleId,
+            'associated':  false,
             'search':      $location.search().search || "", // TODO: is this correct?
             'sort_by':     'name',
             'sort_order':  'ASC',
             'paged':       true
         };
 
-        usersPane = new Nutupane(Role, params, 'users');
-        $scope.usersTable = usersPane.table;
+        organizationsPane = new Nutupane(Role, params, 'organizations');
+        $scope.organizationsTable = organizationsPane.table;
         // TODO: inifinite loop as the list just increments page number
-        usersPane.searchTransform = function () {
+        organizationsPane.searchTransform = function () {
             return "\"\""
         };
 
-        $scope.removeUsers = function () {
+        $scope.addOrganizations = function () {
             var data,
                 success,
                 error,
                 deferred = $q.defer(),
-                users = _.pluck($scope.role.users, 'id'),
-                usersToRemove = _.pluck($scope.usersTable.getSelected(), 'id');
+                organizationsToAdd = _.pluck($scope.organizationsTable.getSelected(), 'id');
 
             data = {
                 role: {
-                    "user_ids": _.difference(users, usersToRemove)
+                    "organization_ids": organizationsToAdd
                 }
             };
 
             success = function (data) {
-                $scope.successMessages = [gettext('Removed %x users from role "%y".')
-                    .replace('%x', $scope.usersTable.numSelected).replace('%y', $scope.role.name)];
-                $scope.usersTable.working = false;
-                $scope.usersTable.selectAll(false);
-                usersPane.refresh();
+                $scope.successMessages = [gettext('Added %x organizations to role "%y".')
+                    .replace('%x', $scope.organizationsTable.numSelected).replace('%y', $scope.role.name)];
+                $scope.organizationsTable.working = false;
+                $scope.organizationsTable.selectAll(false);
+                organizationsPane.refresh();
                 $scope.role.$get();
                 deferred.resolve(data);
             };
@@ -75,11 +77,11 @@ angular.module('Roles.roles').controller('RoleUsersController',
             error = function (error) {
                 deferred.reject(error.data.errors);
                 $scope.errorMessages = error.data.errors;
-                $scope.usersTable.working = false;
+                $scope.organizationsTable.working = false;
             };
 
-            $scope.usersTable.working = true;
-            Role.removeUsers({id: $scope.role.id}, data, success, error);
+            $scope.organizationsTable.working = true;
+            Role.addOrganizations({id: $scope.role.id}, data, success, error);
             return deferred.promise;
         };
     }]

@@ -157,6 +157,46 @@ angular.module('Roles.roles').config(['$stateProvider', function ($stateProvider
         templateUrl: 'roles/details/views/role-user-groups-table.html'
     });
 
+    $stateProvider.state('roles.details.organizations', {
+        abstract: true,
+        collapsed: true,
+        templateUrl: 'roles/details/views/role-organizations.html'
+    })
+    .state('roles.details.organizations.list', {
+        url: '/organizations',
+        permission: 'view_roles',
+        collapsed: true,
+        controller: 'RoleOrganizationsController',
+        templateUrl: 'roles/details/views/role-organizations-table.html'
+    })
+    .state('roles.details.organizations.add', {
+        url: '/organizations/add',
+        permission: 'view_roles',
+        collapsed: true,
+        controller: 'RoleAddOrganizationsController',
+        templateUrl: 'roles/details/views/role-organizations-table.html'
+    });
+
+    $stateProvider.state('roles.details.locations', {
+        abstract: true,
+        collapsed: true,
+        templateUrl: 'roles/details/views/role-locations.html'
+    })
+    .state('roles.details.locations.list', {
+        url: '/locations',
+        permission: 'view_roles',
+        collapsed: true,
+        controller: 'RoleLocationsController',
+        templateUrl: 'roles/details/views/role-locations-table.html'
+    })
+    .state('roles.details.locations.add', {
+        url: '/locations/add',
+        permission: 'view_roles',
+        collapsed: true,
+        controller: 'RoleAddLocationsController',
+        templateUrl: 'roles/details/views/role-locations-table.html'
+    });
+
     $stateProvider.state("roles.bulk-actions", {
         abstract: true,
         collapsed: true,

@@ -13,7 +13,7 @@
 
 /**
  * @ngdoc object
- * @name  Roles.roles.controller:RoleUsersController
+ * @name  Roles.roles.controller:RoleAddLocationsController
  *
  * @requires $scope
  * @requires $q
@@ -23,63 +23,64 @@
  * @requires Nutupane
  *
  * @description
- *   Provides the functionality for the list users details action pane.
+ *   Provides the functionality for adding locations to a role.
  */
-angular.module('Roles.roles').controller('RoleUsersController',
-    ['$scope', '$q', '$location', 'gettext', 'Role', 'User', 'Nutupane',
-    function ($scope, $q, $location, gettext, Role, User, Nutupane) {
-        var usersPane, params;
+angular.module('Roles.roles').controller('RoleAddLocationsController',
+    ['$scope', '$q', '$location', 'gettext', 'Role', 'Nutupane',
+    function ($scope, $q, $location, gettext, Role, Nutupane) {
+        var locationsPane, params;
 
         $scope.successMessages = [];
         $scope.errorMessages = [];
 
         params = {
             'id':          $scope.$stateParams.roleId,
+            'associated':  false,
             'search':      $location.search().search || "", // TODO: is this correct?
             'sort_by':     'name',
             'sort_order':  'ASC',
             'paged':       true
         };
 
-        usersPane = new Nutupane(Role, params, 'users');
-        $scope.usersTable = usersPane.table;
+        locationsPane = new Nutupane(Role, params, 'locations');
+        $scope.locationsTable = locationsPane.table;
         // TODO: inifinite loop as the list just increments page number
-        usersPane.searchTransform = function () {
+        locationsPane.searchTransform = function () {
             return "\"\""
         };
 
-        $scope.removeUsers = function () {
+        $scope.addLocations = function () {
             var data,
                 success,
                 error,
                 deferred = $q.defer(),
-                users = _.pluck($scope.role.users, 'id'),
-                usersToRemove = _.pluck($scope.usersTable.getSelected(), 'id');
+                locations = _.pluck($scope.role.locations, 'id'),
+                locationsToAdd = _.pluck($scope.locationsTable.getSelected(), 'id');
 
             data = {
                 role: {
-                    "user_ids": _.difference(users, usersToRemove)
+                    "location_ids": _.union(locations, locationsToAdd)
                 }
             };
 
             success = function (data) {
-                $scope.successMessages = [gettext('Removed %x users from role "%y".')
-                    .replace('%x', $scope.usersTable.numSelected).replace('%y', $scope.role.name)];
-                $scope.usersTable.working = false;
-                $scope.usersTable.selectAll(false);
-                usersPane.refresh();
+                $scope.successMessages = [gettext('Added %x locations to role "%y".')
+                    .replace('%x', $scope.locationsTable.numSelected).replace('%y', $scope.role.name)];
+                $scope.locationsTable.working = false;
+                $scope.locationsTable.selectAll(false);
+                locationsPane.refresh();
                 $scope.role.$get();
                 deferred.resolve(data);
             };
 
             error = function (error) {
                 deferred.reject(error.data.errors);
-                $scope.errorMessages = error.data.errors;
-                $scope.usersTable.working = false;
+                $scope.errorMessages = error.data.errors['base'];
+                $scope.locationsTable.working = false;
             };
 
-            $scope.usersTable.working = true;
-            Role.removeUsers({id: $scope.role.id}, data, success, error);
+            $scope.locationsTable.working = true;
+            Role.addLocations({id: $scope.role.id}, data, success, error);
             return deferred.promise;
         };
     }]

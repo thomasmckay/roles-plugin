@@ -14,9 +14,12 @@ module Roles
   module Api
     class RolesController < ::Api::V2::RolesController
 
-      before_filter :find_resource, :only => [:users, :add_users, :remove_users, :update, :user_permissions]
+      before_filter :find_resource, :only => [:users, :add_users, :remove_users,
+                                              :organizations, :add_organizations, :remove_organizations,
+                                              :locations, :add_locations, :remove_locations,
+                                              :update, :user_permissions]
 
-      layout '/api/v2/layouts/index_layout', :only => :users
+      layout '/api/v2/layouts/index_layout', :only => [:users, :organizations, :locations]
 
       def update
         # Necessary to avoid "mass assignment" errors
@@ -28,6 +31,7 @@ module Roles
       # TODO: apipie
       def users
         associated = (params[:associated] || 'true').to_bool # TODO: what's best way to check bool in params?
+
         user_ids = User.authorized(:view_users).except_hidden.collect do |user|
           if associated
             user.id if user.role_ids.include? @role.id
@@ -37,7 +41,7 @@ module Roles
         end
         user_ids.compact!
 
-        @users = User.where(:id => user_ids).paginate(paginate_options)
+        @users = User.where(:id => user_ids)
 
         render :template => 'api/v2/users/index'
       end
@@ -55,6 +59,81 @@ module Roles
         ids = params[:role][:user_ids]
         @role.user_ids = (@role.user_ids - ids).uniq
         @role.save!
+        render :action => :show
+      end
+
+      # TODO: apipie
+      def organizations
+        associated = (params[:associated] || 'true').to_bool # TODO: what's best way to check bool in params?
+
+        filter_organization_ids = []
+        @role.filters.each do |filter|
+          filter.organizations.each do |organization|
+            filter_organization_ids << organization.id
+          end
+        end
+        filter_organization_ids.uniq
+
+        organization_ids = Organization.authorized(:view_organizations).collect do |organization|
+          if associated
+            organization.id if filter_organization_ids.include? organization.id
+          else
+            organization.id unless filter_organization_ids.include? organization.id
+          end
+        end
+        organization_ids.compact!
+
+        @organizations = Organization.where(:id => organization_ids).paginate(paginate_options)
+
+        @taxonomies = @organizations
+        render :template => 'api/v2/taxonomies/index'
+      end
+
+      # TODO: apipie
+      def add_organizations
+        ids = params[:role][:organization_ids]
+        ids &= Organization.authorized(:view_organizations).pluck(:id)
+
+        @role.filters.each do |filter|
+          if filter.allows_organization_filtering?
+            filter.organization_ids = (filter.organization_ids + ids).uniq
+            filter.save!
+          end
+        end
+        @role.reload
+
+        render :action => :show
+      end
+
+      # TODO: apipie
+      def remove_organizations
+        ids = params[:role][:organization_ids]
+        ids &= Organization.authorized(:view_organizations).pluck(:id)
+
+        @role.filters.each do |filter|
+          x = filter.organization_ids
+          if filter.allows_organization_filtering?
+            filter.organization_ids = (filter.organization_ids - ids).uniq
+            filter.save!
+          end
+        end
+        @role.reload
+
+        render :action => :show
+      end
+
+      # TODO: apipie
+      def locations
+        render :template => 'api/v2/taxonomies/index'
+      end
+
+      # TODO: apipie
+      def add_locations
+        render :action => :show
+      end
+
+      # TODO: apipie
+      def remove_locations
         render :action => :show
       end
 
@@ -83,9 +162,11 @@ module Roles
       end
 
       def action_permission
-        if %w(add_users remove_users).include?(params[:action])
+        if %w(add_users remove_users
+              add_organizations remove_organizations
+              add_locations remove_locations).include?(params[:action])
           :edit
-        elsif %w(users user_permissions).include?(params[:action])
+        elsif %w(users organizations locations user_permissions).include?(params[:action])
           :view
         else
           super

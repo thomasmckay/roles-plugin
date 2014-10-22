@@ -31,7 +31,6 @@ angular.module('Roles.roles').controller('RolesController',
     function ($scope, $location, Nutupane, Role, CurrentOrganization) {
 
         var watch, params = {
-            'organization_id':  CurrentOrganization,
             'search':           $location.search().search || "",
             'sort_by':          'name',
             'sort_order':       'ASC',

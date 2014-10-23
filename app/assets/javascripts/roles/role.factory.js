@@ -25,7 +25,7 @@ angular.module('Roles.roles').factory('Role',
     ['BastionResource', function (BastionResource) {
         return BastionResource('/../api/roles/:id/:action', {id: '@id'}, {
             get: {method: 'GET', isArray: false},
-            update: {method: 'PUT', url: '/../roles/api/roles/:id'},
+            update: {method: 'PUT', url: '/../roles-plugin/api/roles/:id'},
             removeRoles: {method: 'GET', params: {action: 'filter'}},
             filter: {method: 'GET', params: {action: 'filter'}},
             permissions: {method: 'GET', isArray: false, transformResponse: function (data) {
@@ -34,24 +34,24 @@ angular.module('Roles.roles').factory('Role',
             }},
             userGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
             availableUserGroups: {method: 'GET', isArray: false, url: '/../api/v2/usergroups'},
-            users: {method: 'GET', url: '/../roles/api/roles/:id/users'},
-            availableUsers: {method: 'GET', url: '/../roles/api/roles/:id/users', params: {'associated': false}},
-            addUsers: {method: 'POST', url: '/../roles/api/roles/:id/users'},
-            removeUsers: {method: 'PUT', url: '/../roles/api/roles/:id/users'},
+            users: {method: 'GET', url: '/../roles-plugin/api/roles/:id/users'},
+            availableUsers: {method: 'GET', url: '/../roles-plugin/api/roles/:id/users', params: {'associated': false}},
+            addUsers: {method: 'POST', url: '/../roles-plugin/api/roles/:id/users'},
+            removeUsers: {method: 'PUT', url: '/../roles-plugin/api/roles/:id/users'},
 
-            organizations: {method: 'GET', url: '/../roles/api/roles/:id/organizations'},
-            availableOrganizations: {method: 'GET', url: '/../roles/api/roles/:id/organizations', params: {'associated': false}},
-            addOrganizations: {method: 'POST', url: '/../roles/api/roles/:id/organizations'},
-            removeOrganizations: {method: 'PUT', url: '/../roles/api/roles/:id/organizations'},
+            organizations: {method: 'GET', url: '/../roles-plugin/api/roles/:id/organizations'},
+            availableOrganizations: {method: 'GET', url: '/../roles-plugin/api/roles/:id/organizations', params: {'associated': false}},
+            addOrganizations: {method: 'POST', url: '/../roles-plugin/api/roles/:id/organizations'},
+            removeOrganizations: {method: 'PUT', url: '/../roles-plugin/api/roles/:id/organizations'},
 
-            locations: {method: 'GET', url: '/../roles/api/roles/:id/locations'},
-            availableLocations: {method: 'GET', url: '/../roles/api/roles/:id/locations', params: {'associated': false}},
-            addLocations: {method: 'POST', url: '/../roles/api/roles/:id/locations'},
-            removeLocations: {method: 'PUT', url: '/../roles/api/roles/:id/locations'},
+            locations: {method: 'GET', url: '/../roles-plugin/api/roles/:id/locations'},
+            availableLocations: {method: 'GET', url: '/../roles-plugin/api/roles/:id/locations', params: {'associated': false}},
+            addLocations: {method: 'POST', url: '/../roles-plugin/api/roles/:id/locations'},
+            removeLocations: {method: 'PUT', url: '/../roles-plugin/api/roles/:id/locations'},
 
             // TODO: Should this be on User? Some query to return only the user's available
             //       filter resource types and permissions.
-            availablePermissions: {method: 'GET', isArray: true, url: '/../roles/api/roles/:id/permissions'}
+            availablePermissions: {method: 'GET', isArray: true, url: '/../roles-plugin/api/roles/:id/permissions'}
         });
     }]
 );

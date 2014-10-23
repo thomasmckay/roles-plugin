@@ -1,5 +1,5 @@
 Roles::Engine.routes.draw do
-  scope :roles, :path => '/roles' do
+  scope :roles, :path => '/roles-plugin' do
     namespace :api do
       resources :roles, :only => [:index, :update] do
         member do

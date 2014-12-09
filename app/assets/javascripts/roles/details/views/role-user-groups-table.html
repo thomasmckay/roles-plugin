@@ -1,7 +1,7 @@
 <section class="nutupane-sub-section">
-  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+  <div bst-alert success-messages="successMessages" error-messages="errorMessages"></div>
 
-  <div class="nutupane-bar">
+  <div class="row">
 
     <div class="col-sm-3">
       <div class="input-group">
@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <div alch-table="userGroupsTable" class="nutupane">
-    <div alch-container-scroll control-width="userGroupsTable" alch-infinite-scroll="userGroupsTable.nextPage()">
+  <div bst-table="userGroupsTable" class="nutupane">
+    <div bst-container-scroll control-width="userGroupsTable" bst-infinite-scroll="userGroupsTable.nextPage()">
 
       <div ng-show="userGroupsTable.rows.length == 0">
         <div class="loading-mask" ng-show="userGroupsTable.working">
@@ -55,20 +55,20 @@
       <table ng-show="userGroupsTable.rows.length > 0"
              ng-class="{'table-mask': userGroupsTable.working}" class="table table-full table-striped">
         <thead>
-          <tr alch-table-head row-select="userGroup">
-            <th alch-table-column="name" translate>Name</th>
-            <th alch-table-column="description" translate>Description</th>
+          <tr bst-table-head row-select="userGroup">
+            <th bst-table-column="name" translate>Name</th>
+            <th bst-table-column="description" translate>Description</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row ng-repeat="userGroup in userGroupsTable.rows | filter:userGroupFilter" row-select="userGroup">
-            <td alch-table-cell>
+          <tr bst-table-row ng-repeat="userGroup in userGroupsTable.rows | filter:userGroupFilter" row-select="userGroup">
+            <td bst-table-cell>
               <a href={{"usergroups/" + userGroup.id + "/edit"}}>
                 {{ userGroup.name }}
               </a>
             </td>
-            <td alch-table-cell>{{ userGroup.description }}</td>
+            <td bst-table-cell>{{ userGroup.description }}</td>
           </tr>
         </tbody>
       </table>

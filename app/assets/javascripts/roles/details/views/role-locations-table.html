@@ -1,7 +1,7 @@
 <section class="nutupane-sub-section">
-  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+  <div bst-alert success-messages="successMessages" error-messages="errorMessages"></div>
 
-  <div class="nutupane-bar">
+  <div class="row">
 
     <div class="col-sm-3">
       <div class="input-group">
@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <div alch-table="locationsTable" class="nutupane">
-    <div alch-container-scroll control-width="locationsTable" alch-infinite-scroll="locationsTable.nextPage()">
+  <div bst-table="locationsTable" class="nutupane">
+    <div bst-container-scroll control-width="locationsTable" bst-infinite-scroll="locationsTable.nextPage()">
       <div ng-show="locationsTable.rows.length == 0">
         <div class="loading-mask" ng-show="locationsTable.working">
           <i class="icon-spinner icon-spin"></i>
@@ -54,22 +54,18 @@
       <table ng-show="locationsTable.rows.length > 0"
              ng-class="{'table-mask': locationsTable.working}" class="table table-full table-striped">
         <thead>
-          <tr alch-table-head row-select="location">
-            <th alch-table-column="login" translate>Login</th>
-            <th alch-table-column="mail" translate>Email</th>
-            <th alch-table-column="last_login_on" translate>Last Login</th>
+          <tr bst-table-head row-select="location">
+            <th bst-table-column="name" translate>Name</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row ng-repeat="location in locationsTable.rows | filter:locationFilter" row-select="location">
-            <td alch-table-cell>
+          <tr bst-table-row ng-repeat="location in locationsTable.rows | filter:locationFilter" row-select="location">
+            <td bst-table-cell>
               <a href="../locations/{{location.id}}/edit"}}>
-                {{ location.login }}
+                {{ location.name }}
               </a>
             </td>
-            <td alch-table-cell>{{ location.mail }}</td>
-            <td alch-table-cell>{{ location.last_login_on }}</td>
           </tr>
         </tbody>
       </table>

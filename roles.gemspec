@@ -7,17 +7,14 @@ require "roles/version"
 Gem::Specification.new do |s|
   s.name        = "roles"
   s.version     = Roles::VERSION
-  s.authors     = ["Red Hat"]
+  s.authors     = ["thomasfmckay@gmail.com"]
   s.email       = ["foreman-dev@googlegroups.com"]
   s.homepage    = "http://theforeman.org"
-  s.summary     = "Foretello Roles UI"
-  s.description = "Foretello Roles UI"
+  s.summary     = "Foreman & Katello Roles UI"
+  s.description = "Foreman & Katello Roles UI"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,lib}/**/*", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails"
   s.add_dependency "bastion"
-
-  s.add_dependency "less-rails", "~> 2.5.0"
 end

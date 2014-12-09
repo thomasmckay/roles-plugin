@@ -1,6 +1,6 @@
 <span page-title ng-model="role">{{ 'New permission for Role for:' | translate }} {{ role.name }}</span>
 <div>
-  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+  <div bst-alert success-messages="successMessages" error-messages="errorMessages"></div>
 
   <a ui-sref="roles.details.permissions.index({roleId: role.id})">
     <i class="icon-double-angle-left"></i>
@@ -13,7 +13,7 @@
 
     <form name="permissionForm" class="form-horizontal" novalidate role="form">
 
-      <div alch-form-group label="{{ 'Name' | translate }}">
+      <div bst-form-group label="{{ 'Name' | translate }}">
         <input id="name"
                name="name"
                ng-model="permission.name"
@@ -22,7 +22,7 @@
                autofocus
                required/>
       </div>
-      <div alch-form-group label="{{ 'Resource Type' | translate }}">
+      <div bst-form-group label="{{ 'Resource Type' | translate }}">
         <select id="resource_type"
                 name="resource_type"
                 ng-model="permission.resource_type"
@@ -34,7 +34,7 @@
 
       <div ng-repeat="availablePermission in permissionTypes"
            ng-hide="permissionTypes.length < 1">
-        <div alch-form-group label="{{ availablePermission | permissionName }}">
+        <div bst-form-group label="{{ availablePermission | permissionName }}">
           <input type="checkbox"
                  name="permission.filters[]"
                  value="{{availablePermission.id}}"
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <div alch-form-buttons
+      <div bst-form-buttons
            on-cancel="transitionTo('roles.details.permissions.index({roleId: role.id})')"
            on-save="save(permission)"
            working="working">

@@ -1,13 +1,13 @@
 <table class="table table-striped" ng-class="{'table-mask': roleTable.working}">
   <thead>
-    <tr alch-table-head row-select>
-      <th alch-table-column="name" sortable>{{ "Name" | translate }}</th>
+    <tr bst-table-head row-select>
+      <th bst-table-column="name" sortable>{{ "Name" | translate }}</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr alch-table-row ng-repeat="role in roleTable.rows" row-select="role">
-      <td alch-table-cell>
+    <tr bst-table-row ng-repeat="role in roleTable.rows" row-select="role">
+      <td bst-table-cell>
         <a ui-sref="roles.details.info({roleId: role.id})">
           {{ role.name }}
         </a>

@@ -22,10 +22,11 @@ BASTION_MODULES.push('Roles.roles');
  */
 angular.module('Roles.roles', [
     'ngResource',
-    'alchemy',
-    'alch-templates',
     'ui.router',
-    'Bastion.widgets'
+    'Bastion',
+    'Bastion.organizations',
+    'Bastion.components',
+    'Bastion.components.formatters'
 ]);
 
 /**

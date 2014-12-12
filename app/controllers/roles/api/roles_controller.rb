@@ -111,7 +111,6 @@ module Roles
         ids &= Organization.authorized(:view_organizations).pluck(:id)
 
         @role.filters.each do |filter|
-          x = filter.organization_ids
           if filter.allows_organization_filtering?
             filter.organization_ids = (filter.organization_ids - ids).uniq
             filter.save!
@@ -122,20 +121,67 @@ module Roles
         render :action => :show
       end
 
+
       # TODO: apipie
       def locations
+        associated = (params[:associated] || 'true').to_bool # TODO: what's best way to check bool in params?
+
+        filter_location_ids = []
+        @role.filters.each do |filter|
+          filter.locations.each do |location|
+            filter_location_ids << location.id
+          end
+        end
+        filter_location_ids.uniq
+
+        location_ids = Location.authorized(:view_locations).collect do |location|
+          if associated
+            location.id if filter_location_ids.include? location.id
+          else
+            location.id unless filter_location_ids.include? location.id
+          end
+        end
+        location_ids.compact!
+
+        @locations = Location.where(:id => location_ids).paginate(paginate_options)
+
+        @taxonomies = @locations
         render :template => 'api/v2/taxonomies/index'
       end
 
       # TODO: apipie
       def add_locations
+        ids = params[:role][:location_ids]
+        ids &= Location.authorized(:view_locations).pluck(:id)
+
+        @role.filters.each do |filter|
+          if filter.allows_location_filtering?
+            filter.location_ids = (filter.location_ids + ids).uniq
+            filter.save!
+          end
+        end
+        @role.reload
+
         render :action => :show
       end
 
       # TODO: apipie
       def remove_locations
+        ids = params[:role][:location_ids]
+        ids &= Location.authorized(:view_locations).pluck(:id)
+
+        @role.filters.each do |filter|
+          if filter.allows_location_filtering?
+            filter.location_ids = (filter.location_ids - ids).uniq
+            filter.save!
+          end
+        end
+        @role.reload
+
         render :action => :show
       end
+
+
 
       def user_permissions
         if User.current.admin?

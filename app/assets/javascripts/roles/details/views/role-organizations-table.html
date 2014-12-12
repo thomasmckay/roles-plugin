@@ -1,7 +1,7 @@
 <section class="nutupane-sub-section">
-  <div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+  <div bst-alert success-messages="successMessages" error-messages="errorMessages"></div>
 
-  <div class="nutupane-bar">
+  <div class="row">
 
     <div class="col-sm-3">
       <div class="input-group">
@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <div alch-table="organizationsTable" class="nutupane">
-    <div alch-container-scroll control-width="organizationsTable" alch-infinite-scroll="organizationsTable.nextPage()">
+  <div bst-table="organizationsTable" class="nutupane">
+    <div bst-container-scroll control-width="organizationsTable" bst-infinite-scroll="organizationsTable.nextPage()">
       <div ng-show="organizationsTable.rows.length == 0">
         <div class="loading-mask" ng-show="organizationsTable.working">
           <i class="icon-spinner icon-spin"></i>
@@ -54,19 +54,18 @@
       <table ng-show="organizationsTable.rows.length > 0"
              ng-class="{'table-mask': organizationsTable.working}" class="table table-full table-striped">
         <thead>
-          <tr alch-table-head row-select="organization">
-            <th alch-table-column="login" translate>Name</th>
+          <tr bst-table-head row-select="organization">
+            <th bst-table-column="name" translate>Name</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row ng-repeat="organization in organizationsTable.rows | filter:organizationFilter" row-select="organization">
-            <td alch-table-cell>
+          <tr bst-table-row ng-repeat="organization in organizationsTable.rows | filter:organizationFilter" row-select="organization">
+            <td bst-table-cell>
               <a href="../organizations/{{organization.id}}/edit"}}>
-                {{ organization.login }}
+                {{ organization.name }}
               </a>
             </td>
-            <td alch-table-cell>{{ organization.name }}</td>
           </tr>
         </tbody>
       </table>

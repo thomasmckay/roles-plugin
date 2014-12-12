@@ -1,9 +1,9 @@
 <span page-title ng-model="role">{{ 'Permissions for:' | translate }} {{ role.name }}</span>
-<div alch-alert success-messages="successMessages" error-messages="errorMessages"></div>
+<div bst-alert success-messages="successMessages" error-messages="errorMessages"></div>
 
 <section class="nutupane-sub-section" >
 
-  <div class="nutupane-bar">
+  <div class="row">
 
     <div class="col-sm-3">
       <div class="input-group">
@@ -39,8 +39,8 @@
     </div>
   </div>
 
-  <div alch-table="permissionsTable" class="nutupane">
-    <div alch-container-scroll control-width="permissionsTable" alch-infinite-scroll="permissionsTable.nextPage()">
+  <div bst-table="permissionsTable" class="nutupane">
+    <div bst-container-scroll control-width="permissionsTable" bst-infinite-scroll="permissionsTable.nextPage()">
 
       <div class="loading-mask icon-3x" ng-show="permissionsTable.working && permissionsTable.rows.length == 0">
         <i class="icon-spinner icon-spin"></i>
@@ -49,60 +49,60 @@
 
       <table ng-class="{'table-mask': permissionsTable.working}" class="table table-full table-striped">
         <thead>
-          <tr alch-table-head row-select="permission">
-            <th alch-table-column="quantity" sortable>{{ "Resource" | translate }}</th>
-            <th alch-table-column="quantity" sortable>{{ "Search" | translate }}</th>
+          <tr bst-table-head row-select="permission">
+            <th bst-table-column="quantity" sortable>{{ "Resource" | translate }}</th>
+            <th bst-table-column="quantity" sortable>{{ "Search" | translate }}</th>
 <!--
-            <th alch-table-column="attached" sortable>{{ "Organizations" | translate }}</th>
-            <th alch-table-column="attached" sortable>{{ "Locations" | translate }}</th>
+            <th bst-table-column="attached" sortable>{{ "Organizations" | translate }}</th>
+            <th bst-table-column="attached" sortable>{{ "Locations" | translate }}</th>
 -->
-            <th alch-table-column="attached" sortable>{{ "Permissions" | translate }}</th>
+            <th bst-table-column="attached" sortable>{{ "Permissions" | translate }}</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr alch-table-row  ng-repeat-start="filter in role.filters" row-select="permission">
-            <td alch-table-cell>
+          <tr bst-table-row  ng-repeat-start="filter in role.filters" row-select="permission">
+            <td bst-table-cell>
               <a ui-sref="roles.details.permissions.info({roleId: role.id, filterId: filter.id})">
                 {{ filter.permissions[0].resource_type }}
               </a>
             </td>
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ filter.search }}
             </td>
 <!--
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatNameList(filter.organizations).join(', ') }}
             </td>
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatNameList(filter.locations).join(', ') }}
             </td>
 -->
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatPermissionsList(filter.permissions) }}
             </td>
           </tr>
-          <tr alch-table-row ng-repeat-end ng-repeat="subfilter in filter.filters">
-            <td alch-table-cell>
+          <tr bst-table-row ng-repeat-end ng-repeat="subfilter in filter.filters">
+            <td bst-table-cell>
               <span class="glyphicon glyphicon-lock" title="Inherited"/>
             </td>
-            <td alch-table-cell>
+            <td bst-table-cell>
               <a ui-sref="roles.details.permissions.info({roleId: role.id, filterId: subfilter.id})">
                 {{ subfilter.permissions[0].resource_type }}
               </a>
             </td>
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ subfilter.search }}
             </td>
 <!--
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatNameList(subfilter.organizations).join(', ') }}
             </td>
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatNameList(subfilter.locations).join(', ') }}
             </td>
 -->
-            <td alch-table-cell>
+            <td bst-table-cell>
               {{ formatPermissionsList(subfilter.permissions) }}
             </td>
           </tr>

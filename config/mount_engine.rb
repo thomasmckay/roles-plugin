@@ -1,3 +1,3 @@
 Foreman::Application.routes.draw do
-  mount Roles::Engine, :at => '/', :as => 'roles'
+  mount RolesPlugin::Engine, :at => '/', :as => 'roles'
 end

@@ -1,0 +1,37 @@
+{
+  "name": "bastion-roles",
+  "version": "0.1.0",
+  "description": "Bastion UI for foreman and katello roles",
+  "main": "bastion-roles.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "bastion": "~0.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "directories": {
+    "lib": "./app"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomasmckay/roles_plugin"
+  },
+  "keywords": [
+    "bastion",
+    "katello",
+    "foreman"
+  ],
+  "author": "Thomas McKay <thomasfmckay@gmail.com>",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/thomasmckay/roles_plugin/issues"
+  }
+}

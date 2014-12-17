@@ -20,3 +20,4 @@ config/initializers/secret_token.rb
 node_modules
 Gemfile.lock
 npm-debug.log
+.tmp

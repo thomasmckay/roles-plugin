@@ -1,4 +1,4 @@
 roles-plugin
 ====================
 
-Foretello roles UI plugin
+Katello roles UI plugin

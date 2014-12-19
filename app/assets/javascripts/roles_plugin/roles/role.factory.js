@@ -23,7 +23,7 @@
  */
 angular.module('RolesPlugin.roles').factory('Role',
     ['BastionResource', function (BastionResource) {
-        return BastionResource('/../api/v2/roles/:id/:action', {id: '@id'}, {
+        return BastionResource('/../roles_plugin/api/roles/:id/:action', {id: '@id'}, {
             get: {method: 'GET', isArray: false},
             update: {method: 'PUT', url: '/../roles_plugin/api/roles/:id'},
             removeRoles: {method: 'GET', params: {action: 'filter'}},
